@@ -1,4 +1,4 @@
-project     = "01-security-s1-secure-vpc-private-app-waf-logs"
+project     = "02-security-s2-guardrails-cloudtrail-config-securityhub"
 environment = "dev"
 owner       = "prathamesh"
 cost_center = "practice"

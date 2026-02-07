@@ -1,16 +1,10 @@
-# Security S1 — Secure VPC + Private App + ALB + WAF + Centralized Logs (Terraform)
+# Security S2 — Guardrails: CloudTrail + AWS Config + Security Hub (Terraform)
 
 ## What you build
-- VPC (2 AZ) with public + private subnets
-- 1 NAT Gateway (private egress)
-- Private EC2 instance running nginx
-- Public ALB → forwards to private instance
-- AWS WAFv2 attached to ALB (managed rules + rate limit)
-- ALB access logs → S3 (lifecycle)
-- VPC Flow Logs → CloudWatch Logs
-- No SSH: access instance via **SSM Session Manager**
-
-> Cost drivers: NAT Gateway, ALB, WAF, CW logs. Destroy after practice.
+- Multi-region CloudTrail → S3 (+ CloudWatch Logs option)
+- AWS Config recorder + delivery channel to S3
+- A few AWS Config managed rules (S3 public access, restricted SSH)
+- AWS Security Hub enabled (baseline findings)
 
 ## Run
 ```bash
@@ -18,17 +12,16 @@ cp terraform.tfvars.example terraform.tfvars
 terraform init
 terraform apply
 ```
-Outputs include the ALB URL.
 
 ## Validate
-- Open ALB DNS in browser: should show nginx page
-- In WAF console, verify WebACL attached; try hitting `/` rapidly to see rate-based rule count
-- In CloudWatch Logs, verify VPC flow logs group exists
+- CloudTrail: new events appear in S3 bucket
+- Config: recorder is ON and rules evaluate resources
+- Security Hub: enabled and produces findings
 
 ## Destroy
 ```bash
 terraform destroy
 ```
 
-## Remote state (optional)
-Uncomment and fill backend in `backend.tf` if you want S3+DDB locking.
+## Notes
+Some controls (like SCPs) require AWS Organizations; this project focuses on guardrails you can do in a single account.
