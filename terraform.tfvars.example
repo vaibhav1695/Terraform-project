@@ -1,0 +1,6 @@
+project     = "01-security-s1-secure-vpc-private-app-waf-logs"
+environment = "dev"
+owner       = "prathamesh"
+cost_center = "practice"
+region      = "ap-south-1"
+az_count    = 2
