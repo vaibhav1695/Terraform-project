@@ -1,10 +1,10 @@
-# Security S2 — Guardrails: CloudTrail + AWS Config + Security Hub (Terraform)
+# Cost C1 — Start/Stop Scheduler + Budgets + S3 Lifecycle (Terraform)
 
 ## What you build
-- Multi-region CloudTrail → S3 (+ CloudWatch Logs option)
-- AWS Config recorder + delivery channel to S3
-- A few AWS Config managed rules (S3 public access, restricted SSH)
-- AWS Security Hub enabled (baseline findings)
+- An EC2 instance tagged for scheduling
+- Lambda + EventBridge rules to **stop** and **start** instances by tag
+- AWS Budgets monthly limit email alert
+- S3 log bucket with lifecycle expiration (30d)
 
 ## Run
 ```bash
@@ -14,14 +14,11 @@ terraform apply
 ```
 
 ## Validate
-- CloudTrail: new events appear in S3 bucket
-- Config: recorder is ON and rules evaluate resources
-- Security Hub: enabled and produces findings
+- Check EventBridge rules and Lambda logs
+- Manually invoke Lambda with test payload to stop/start
+- Verify budget created (email alerts depend on AWS Budgets delivery)
 
 ## Destroy
 ```bash
 terraform destroy
 ```
-
-## Notes
-Some controls (like SCPs) require AWS Organizations; this project focuses on guardrails you can do in a single account.

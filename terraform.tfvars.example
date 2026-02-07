@@ -1,4 +1,4 @@
-project     = "02-security-s2-guardrails-cloudtrail-config-securityhub"
+project     = "03-cost-c1-scheduler-budgets-lifecycle"
 environment = "dev"
 owner       = "prathamesh"
 cost_center = "practice"
